@@ -1,11 +1,21 @@
+import logging
 from aiohttp import web
 import hmac
 import hashlib
 import base64
 
+
+# 配置结构化日志
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+logger = logging.getLogger('websocket')
+
 # 模拟存储 API Key 和 Client Secret 的数据库
 credentials = {
-    "VALID_API_KEY": "3a8e5f1b-9c2d-4e7f-a6b0-5d3c1f8e4a9d"
+    "SGVsbG8sIEkgYW0gdGhlIEFQSSBrZXkh": "TXlTdXBlclNlY3JldEtleVRlbGxOby0xITJAMyM0JDU="
 }
 
 async def websocket_handler(request):
@@ -58,6 +68,7 @@ async def websocket_handler(request):
     computed_signature = base64.b64encode(digest).decode()
 
     if computed_signature != signature:
+        logger.info("Invalid signature for API Key: %s", api_key)
         return web.Response(text="Invalid Signature", status=401)
 
     # 验证通过，建立 WebSocket 连接
@@ -66,6 +77,7 @@ async def websocket_handler(request):
 
     async for msg in ws:
         if msg.type == web.WSMsgType.TEXT:
+            logger.info("Received message: %s", msg.data)
             await ws.send_str(f"Echo: {msg.data}")
 
     return ws

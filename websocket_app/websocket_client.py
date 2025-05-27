@@ -4,8 +4,8 @@ import hashlib
 import base64
 from aiohttp import ClientSession, WSMsgType
 
-API_KEY = "VALID_API_KEY"
-CLIENT_SECRET = "3a8e5f1b-9c2d-4e7f-a6b0-5d3c1f8e4a9d"
+API_KEY = "SGVsbG8sIEkgYW0gdGhlIEFQSSBrZXkh"
+CLIENT_SECRET = "TXlTdXBlclNlY3JldEtleVRlbGxOby0xITJAMyM0JDU="
 WS_URL = "wss://webapp.74.179.236.185.sslip.io/ws"
 
 def generate_signature():
