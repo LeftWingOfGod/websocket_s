@@ -5,7 +5,7 @@ import base64
 
 # 模拟存储 API Key 和 Client Secret 的数据库
 credentials = {
-    "VALID_API_KEY": "CLIENT_SECRET"
+    "VALID_API_KEY": "3a8e5f1b-9c2d-4e7f-a6b0-5d3c1f8e4a9d"
 }
 
 async def websocket_handler(request):
