@@ -6,12 +6,12 @@ from aiohttp import ClientSession, WSMsgType
 
 API_KEY = "VALID_API_KEY"
 CLIENT_SECRET = "3a8e5f1b-9c2d-4e7f-a6b0-5d3c1f8e4a9d"
-WS_URL = "ws://localhost:8080/ws"
+WS_URL = "wss://webapp.74.179.236.185.sslip.io/ws"
 
 def generate_signature():
     signature_string = (
         "(request-target): get /ws\n"
-        "authority: localhost:8080"
+        "authority: webapp.74.179.236.185.sslip.io"
     )
     digest = hmac.new(
         CLIENT_SECRET.encode(),
@@ -28,14 +28,14 @@ async def websocket_client():
         "Signature": f'headers="(request-target) authority", '
                     f'algorithm="hmac-sha256", '
                     f'signature="{signature}"',
-        "Host": "localhost:8080"
+        "Host": "webapp.74.179.236.185.sslip.io"
     }
 
     async with ClientSession() as session:
         try:
             async with session.ws_connect(WS_URL, headers=headers) as ws:
                 print("连接成功")
-                await ws.send_str("Hello Server!")
+                await ws.send_str("Hello Server!1214")
                 async for msg in ws:
                     if msg.type == WSMsgType.TEXT:
                         print(f"收到响应: {msg.data}")
